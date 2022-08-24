@@ -1,6 +1,10 @@
 Wed Mar  9 12:52:18 CST 2022
 
-three R analysis files
+These files contain the sequence used to generate a bootstrap analysis as described in the McNally lab paper
+on HCM vs DCM landscape. These are not the original files, but a partially cleaned up version used to Julie Fisher's paper on MTCH2
+
+R analysis files
 0_process_raw_input.R
 1_run_bootstrap.R
 2_MTCH2_analysis.R
+3_thesis_table.R	created in August 2022 for Julie Fisher's thesis table 1 of subjects

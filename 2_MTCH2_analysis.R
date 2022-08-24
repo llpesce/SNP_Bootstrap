@@ -42,7 +42,6 @@ var.bs %>% filter(Gene == 'MTCH2') %>% distinct(Chr, Loc, Ref, Alt)
 # Chr      Loc Ref Alt
 # 1 chr11 47640429   G   C
 
-# AF comparison with NU GENE, hard coded numbers from Sam
 var.bs %>% filter(Loc == 47640429 & Chr == 'chr11') %>% summarize(sum(AC), sum(NC))
 # sum(AC) sum(NC)
 # 1      77     138
@@ -102,6 +101,7 @@ for (var in c('age.1st.present','IVSd_BSA','EF', 'LVIDd_BSA', 'LVPWd_BSA')){
   print('')
 }
 
+# Try a principal component analysis on the phenotype along the lines of the HCM/DCM paper
 tmp.1 <- tmp %>% select(Id,G, IVSd_BSA,EF, LVIDd_BSA,LVPWd_BSA) %>% filter(across(everything(), ~!is.na(.))) 
 
 pc <- prcomp(x=as.matrix(tmp.1[,3:6]), scale=T, center = T)

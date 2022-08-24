@@ -52,6 +52,7 @@ var %>% ggplot()+geom_density(aes(x=gnomAD_AF_G, col=as.factor(AF)))
 
 
 # Check MTCH2 --------------------------------------------------------------------
+MTCH2_length <- 262*3
 tmp <- var %>% filter(Gene=='MTCH2') %>% left_join(ancestry_data, by='Id') 
 nrow(tmp)
 # [1] 133
@@ -67,9 +68,19 @@ tmp %>% filter(between(Loc, 47660294,47660301)) %>% select(Id, Loc) %>% group_by
 tmp %>% filter(between(Loc, 47660294,47660301)) %>% filter(AF != .5) %>% nrow
 #0
 # Plot density for MTCH2 and the rest
+coeff <- 2.5
 ggplot() + 
   geom_density(data = var, aes(x=gnomAD_AF_G)) + 
-  geom_histogram(data = var %>% filter(Gene == 'MTCH2'), aes(x=gnomAD_AF_G, y = ..count../sum(..count..)*3) )
+  #geom_density(data = var %>% filter(Gene == 'MTCH2'), aes(x=gnomAD_AF_G), adjust = 1 )+
+  geom_histogram(data = var %>% filter(Gene == 'MTCH2'), aes(x=gnomAD_AF_G, y = ..count../sum(..count..)*coeff), fill = 'mediumpurple1', alpha = .4 )+
+  xlab('gnomAD allele frequency')+
+  scale_y_continuous(
+    # Features of the first axis
+    name = "density",
+    # Add a second axis and specify its features
+    sec.axis = sec_axis(~.*coeff,name="Rescaled Counts")
+  )+
+  theme_bw()
 
 # Create allele counts and number of chromosome variables
 var <- var %>% mutate(AC=2*AF,NC=2)
